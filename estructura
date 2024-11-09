@@ -1,0 +1,36 @@
+var cantTraslados: int
+var totalTraslados: int
+
+var ciudadesPerdida: ArrayList<int>  // ciudad -> perdida
+var maximaPerdida: int // valor maximo
+var ciudadesMaxPerdida: ArrayList<int> // indices ciudades maxima perdida
+
+var ciudadesGanancia: ArrayList<int>  // ciudad -> ganancia
+var maximaGanancia: int // valor maximo
+var ciudadesMaxGanancia: ArrayList<int> // indices ciudades maxima ganancia
+
+var ciudadesSuperavit: ColaDePrioridad<Ciudad> 
+
+var trasladosRedituables: ColaDePrioridad<InfoTraslados>  //TODO: handles
+var trasladosAntiguedad: ColaDePrioridad<InfoTraslados> 
+
+
+fn obtenerHandle(c: ColaDePrioridad<InfoTraslado>, id: int): HandleInfoTraslado
+
+modulo wrapperTraslado {
+    traslado: Traslado
+    handle: int
+} 
+
+Modulo DobleHeap {
+    var heap1
+    var heap2
+    var seq<(int, int)>
+    invRep { x en heap1 <=> x en heap2 y ...}
+} 
+
+ColaDeprioconref 
+    fn obtenerIds(): seq<Ids>
+    fn setearId(c, id) 
+
+

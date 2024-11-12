@@ -29,8 +29,11 @@ Modulo DobleHeap {
     invRep { x en heap1 <=> x en heap2 y ...}
 } 
 
-ColaDeprioconref 
-    fn obtenerIds(): seq<Ids>
-    fn setearId(c, id) 
-
+// lo hago para uno. ignoro todo el tema de ciudades
+proc despacharMasAntiguo(inout sistema: BestEffort, in n: N): N {
+    (res, pos) := sistema.trasladosAntiguedad.desencolarMax() // devuelve el trasalado y su pos en el otro heap
+    // tenemos que eliminar res de el otro heap en log(|T|)
+    sistema.trasladosRedituables.desencolar(pos) 
+    return res
+}
 

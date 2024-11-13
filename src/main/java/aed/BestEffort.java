@@ -1,46 +1,63 @@
 package aed;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BestEffort {
-    //Completar atributos privados
+    // Completar atributos privados
+    private Ciudad[] ciudades;
+    private int maxPerdida;
+    private int maxGanancia;
 
-    public BestEffort(int cantCiudades, Traslado[] traslados){
+    private ArrayList<Integer> ciudadesMaxGanancia;
+    private ArrayList<Integer> ciudadesMaxPerdida;
+
+    private int cantTraslados;
+    private int totalTraslados;
+
+    public BestEffort(int cantCiudades, Traslado[] traslados) {
+        // Implementar
+        this.ciudades = new Ciudad[cantCiudades];
+        this.maxPerdida = 0;
+        this.maxGanancia = 0;
+        this.ciudadesMaxGanancia = new ArrayList<Ciudad>();
+        this.ciudadesMaxPerdida = new ArrayList<Ciudad>();
+
+        this.cantTraslados = 0;
+        this.totalTraslados = 0;
+    }
+
+    public void registrarTraslados(Traslado[] traslados) {
         // Implementar
     }
 
-    public void registrarTraslados(Traslado[] traslados){
-        // Implementar
-    }
-
-    public int[] despacharMasRedituables(int n){
+    public int[] despacharMasRedituables(int n) {
         // Implementar
         return null;
     }
 
-    public int[] despacharMasAntiguos(int n){
+    public int[] despacharMasAntiguos(int n) {
         // Implementar
         return null;
     }
 
-    public int ciudadConMayorSuperavit(){
+    public int ciudadConMayorSuperavit() {
         // Implementar
         return 0;
     }
 
-    public ArrayList<Integer> ciudadesConMayorGanancia(){
-        // Implementar
-        return null;
+    public ArrayList<Integer> ciudadesConMayorGanancia() {
+        return this.ciudadesMaxGanancia;
     }
 
-    public ArrayList<Integer> ciudadesConMayorPerdida(){
-        // Implementar
-        return null;
+    public ArrayList<Integer> ciudadesConMayorPerdida() {
+        return this.ciudadesMaxPerdida;
     }
 
-    public int gananciaPromedioPorTraslado(){
+    public int gananciaPromedioPorTraslado() {
         // Implementar
         return 0;
     }
-    
+
 }

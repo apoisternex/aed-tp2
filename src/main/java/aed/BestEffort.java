@@ -1,8 +1,8 @@
 package aed;
 
-import java.awt.Color;
+// import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
+// import java.util.Arrays;
 
 public class BestEffort {
     // Completar atributos privados
@@ -21,8 +21,8 @@ public class BestEffort {
         this.ciudades = new Ciudad[cantCiudades];
         this.maxPerdida = 0;
         this.maxGanancia = 0;
-        this.ciudadesMaxGanancia = new ArrayList<Ciudad>();
-        this.ciudadesMaxPerdida = new ArrayList<Ciudad>();
+        this.ciudadesMaxGanancia = new ArrayList<Integer>();
+        this.ciudadesMaxPerdida = new ArrayList<Integer>();
 
         this.cantTraslados = 0;
         this.totalTraslados = 0;

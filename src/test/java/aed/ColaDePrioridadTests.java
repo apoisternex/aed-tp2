@@ -2,39 +2,127 @@ package aed;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+
 public class ColaDePrioridadTests {
+    ColaDePrioridad<Traslado> cola;
+    TrasladoComparator comparadorT;
+    ArrayList<Traslado> listaTraslados;
+    Traslado t1;
+    Traslado t2;
+    Traslado t3;
+    Traslado t4;
+
+
+    @BeforeEach
+    void init(){
+
+        comparadorT = new TrasladoComparator();
+        cola = new ColaDePrioridad<Traslado>(comparadorT);
+        
+         t1 = new Traslado(1, 1, 2, 10, 1);
+         t2 = new Traslado(2, 1, 2, 20, 2);
+         t3 = new Traslado(3, 1, 2, 130, 3);
+         t4 = new Traslado(4, 1, 2, 5, 4);
+    }
     @Test
     void inicializa(){
-    TrasladoComparator comparadorT = new TrasladoComparator();
-       ColaDePrioridad cola = new ColaDePrioridad<>(comparadorT);
-
        assertEquals(cola.vacia(), true);
-       Traslado t1 = new Traslado(1, 1, 2, 10, 1);
-       Traslado t2 = new Traslado(2, 1, 2, 20, 1);
        assertTrue(comparadorT.compare(t1, t2) < 0);
-       cola.Encolar(t1);
-       cola.Encolar(t2);
-       cola.Encolar(new Traslado(3, 1, 2, 130, 1));
-       cola.Encolar(new Traslado(4, 1, 2, 5, 1));
-       assertEquals(cola.vacia(), false);
-       
+    }
+
+    @Test 
+    void encolar() {
+        cola.Encolar(t1);
+        cola.Encolar(t2);
+        // t3 es el mas prioritario por su ganancia
+        cola.Encolar(t3);
+        cola.Encolar(t4);
+        assertEquals(cola.vacia(), false);
+        Traslado masPrioritario = cola.MasPrioritario();
+        assertEquals(masPrioritario.gananciaNeta, t3.gananciaNeta);
+    }
+
+    @Test
+    void desencolar() {
+        // TODO: ver algun caso donde hay algunos con la misma prioridad
+        cola.Encolar(t1);
+        cola.Encolar(t2);
+        // t3 es el mas prioritario por su ganancia
+        cola.Encolar(t3);
+        cola.Encolar(t4);
+        assertEquals(cola.vacia(), false);
+        assertEquals(cola.MasPrioritario(), t3);
+        cola.DesencolarMax();
+        assertEquals(cola.MasPrioritario(), t2);
+        cola.DesencolarMax();
+        assertEquals(cola.MasPrioritario(), t1);
+        cola.DesencolarMax();
+        assertEquals(cola.vacia(), false);
+        assertEquals(cola.MasPrioritario(), t4);
+        cola.DesencolarMax();
+        assertEquals(cola.vacia(), true);
+    }
+
+    @Test
+    void stressTest() {  
+        int cantElementosATestear = 1000;
+        ArrayList<Traslado> bolsaTraslados = new ArrayList<Traslado>();
+        int i = 0;
+
+        while (i < cantElementosATestear) { 
+            // origen y destino nos dan lo mismo para este test
+           Traslado newT = new Traslado(i, 1, 2, i, i);
+           bolsaTraslados.add(newT);
+
+           i += 1;
+        }
+
+        ColaDePrioridad<Traslado> colaAHeapyfiear = new ColaDePrioridad<Traslado>(comparadorT, bolsaTraslados.toArray(new Traslado[0]));
+
+
+        // ----------- Test encolar -----------
+
+        ArrayList<Traslado> restantesAEncolar = (ArrayList<Traslado>) bolsaTraslados.clone();
+        assertEquals(restantesAEncolar.size(), cantElementosATestear);
+
+        while(restantesAEncolar.size() > 0) {
+            //Encolamos de manera aleatoria
+          int indexAEncolar = ThreadLocalRandom.current().nextInt(0, restantesAEncolar.size());
+
+          cola.Encolar(restantesAEncolar.get(indexAEncolar));
+          restantesAEncolar.remove(indexAEncolar);
+        }
+        assertEquals(restantesAEncolar.size(), 0);
+        assertEquals(cola.MasPrioritario().id, bolsaTraslados.get(bolsaTraslados.size() - 1).id);
+
+        // ----------- Test desencolar -----------
+
+         restantesAEncolar = (ArrayList<Traslado>) bolsaTraslados.clone();
+        assertEquals(restantesAEncolar.size(), cantElementosATestear);
+
+        while(restantesAEncolar.size() > 1) {
+            //Desencolamos de manera aleatoria
+          int indexADesencolar = ThreadLocalRandom.current().nextInt(0, restantesAEncolar.size());
+
+          cola.DesencolarMax();
+          colaAHeapyfiear.DesencolarMax();
+          restantesAEncolar.remove(indexADesencolar);
+        }
+        assertEquals(restantesAEncolar.size(), 1);
+        assertEquals(cola.MasPrioritario().id, bolsaTraslados.get(0).id);
+        assertEquals(colaAHeapyfiear.MasPrioritario().id, bolsaTraslados.get(0).id);
+
     }
     
 }
 
-//  Traslado[] listaTraslados = new Traslado[] {
-//                                             new Traslado(1, 0, 1, 100, 10),
-//                                             new Traslado(2, 0, 1, 400, 20),
-//                                             new Traslado(3, 3, 4, 500, 50),
-//                                             new Traslado(4, 4, 3, 500, 11),
-//                                             new Traslado(5, 1, 0, 1000, 40),
-//                                             new Traslado(6, 1, 0, 1000, 41),
-//                                             new Traslado(7, 6, 3, 2000, 42)
-//                                         }
-    
+

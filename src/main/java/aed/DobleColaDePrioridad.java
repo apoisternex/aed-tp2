@@ -32,12 +32,12 @@ public class DobleColaDePrioridad<T> {
 
     private boolean enSync() {
         for (Nodo n : this.vA.elementos) {
-            if (n.val != this.vB.elementos.get(n.posEnOtra)) {
+            if (n.val != this.vB.elementos.get(n.posEnOtra).val) {
                 return false;
             }
         }
         for (Nodo n : this.vB.elementos) {
-            if (n.val != this.vB.elementos.get(n.posEnOtra)) {
+            if (n.val != this.vA.elementos.get(n.posEnOtra).val) {
                 return false;
             }
         }
@@ -89,13 +89,13 @@ public class DobleColaDePrioridad<T> {
     public int heapifearUno(VectorComparable este, VectorComparable otro) { // O(log(n))
 
         int i = este.elementos.size() - 1; //
-        boolean tienePadre = (i - 1) / 2 >= 0; //
+        boolean tienePadre = i > 0; //
 
         while (tienePadre) { // (El while se ejecuta en peor caso Log(h) veces, h = altura del heap)
                              // me parece que este comentario esta mal, es lineal con respecto a la altura
             int padre = (i - 1) / 2; //
             i = siftUp(este, otro, i, padre); // O(1) (siftUp es O(1)
-            tienePadre = (i - 1) / 2 >= 0; //
+            tienePadre = i > 0; //
         }
         return i;
     }
@@ -112,14 +112,104 @@ public class DobleColaDePrioridad<T> {
         return -1;
     }
 
+    private int siftDownUnHijo(VectorComparable este, VectorComparable otro, int i, int hijo) {
+        T valorI = este.elementos.get(i).val;
+        T valorHijo = este.elementos.get(hijo).val;
+
+        if (este.comparador.compare(valorI, valorHijo) < 0) {
+            swap(este, otro, i, hijo);
+            return hijo;
+        }
+        return este.elementos.size();
+    }
+
+    private int siftDownDosHijos(VectorComparable este, VectorComparable otro, int i, int hijoIzq, int hijoDer) {
+        T valorI = este.elementos.get(i).val;
+        T valorHijoDer = este.elementos.get(hijoDer).val;
+        T valorHijoIzq = este.elementos.get(hijoIzq).val;
+
+        if ((este.comparador.compare(valorI, valorHijoIzq) < 0)
+                || (este.comparador.compare(valorI, valorHijoDer) < 0)) {
+            if (este.comparador.compare(valorHijoIzq, valorHijoDer) >= 0) {
+                swap(este, otro, i, hijoIzq);
+                return hijoIzq;
+            } else {
+                swap(este, otro, i, hijoDer);
+                return hijoDer;
+            }
+        }
+
+        return este.elementos.size();
+    }
+
+    private T desencolarMax(VectorComparable este, VectorComparable otro) {
+        T res = este.elementos.get(0).val;
+        int posEnOtra = este.elementos.get(0).posEnOtra;
+        eliminar(este, otro, 0);
+        eliminar(otro, este, posEnOtra);
+        return res;
+
+    }
+
+    public T desencolarA() {
+        return desencolarMax(vA, vB);
+    }
+
+    public T desencolarB() {
+        return desencolarMax(vB, vA);
+    }
+
+    private void eliminar(VectorComparable este, VectorComparable otro, int posAeliminar) {
+
+        swap(este, otro, posAeliminar, este.elementos.size() - 1);
+        // este.elementos.set(posAeliminar, este.elementos.get(este.elementos.size() -
+        // 1)); //
+        este.elementos.remove(este.elementos.size() - 1); // O(1)
+
+        if (posAeliminar == este.elementos.size()) {
+            return;
+        }
+
+        int i = posAeliminar;
+
+        boolean tieneDosHijos = (2 * i + 2) < este.elementos.size(); //
+        boolean tieneUnHijo = (2 * i + 1) < este.elementos.size();
+        boolean tienePadre = i > 0;
+
+        while (tieneDosHijos || tieneUnHijo) {
+            if (!tieneDosHijos) {
+                int hijo = 2 * i + 1;
+                i = siftDownUnHijo(este, otro, i, hijo);
+            } else {
+                int hijoIzq = 2 * i + 1;
+                int hijoDer = 2 * i + 2;
+                i = siftDownDosHijos(este, otro, i, hijoIzq, hijoDer);
+            }
+            tieneDosHijos = (2 * i + 2) < este.elementos.size();
+            tieneUnHijo = (2 * i + 1) < este.elementos.size();
+
+        }
+
+        i = posAeliminar;
+        while (tienePadre) { // (El while se ejecuta en peor caso Log(h) veces, h = altura del heap)
+                             // me parece que este comentario esta mal, es lineal con respecto a la altura
+            int padre = (i - 1) / 2; //
+            i = siftUp(este, otro, i, padre); // O(1) (siftUp es O(1)
+            tienePadre = i > 0; //
+        }
+
+    }
+
     private void swap(VectorComparable este, VectorComparable otro, int i, int j) { // O(1)
         // es este el unico lugar donde cambiamos cosas de lugar?
         Nodo nodoI = este.elementos.get(i); // O(1)
         Nodo nodoJ = este.elementos.get(j); // O(1)
         este.elementos.set(i, nodoJ); // O(1)
         este.elementos.set(j, nodoI); // O(1)
-        otro.elementos.get(nodoI.posEnOtra).posEnOtra = j; // O(1)
-        otro.elementos.get(nodoJ.posEnOtra).posEnOtra = i;// O(1)
+        if (nodoI.posEnOtra < otro.elementos.size() && nodoJ.posEnOtra < otro.elementos.size()) {
+            otro.elementos.get(nodoI.posEnOtra).posEnOtra = j; // O(1)
+            otro.elementos.get(nodoJ.posEnOtra).posEnOtra = i;// O(1)
+        }
 
     }
 

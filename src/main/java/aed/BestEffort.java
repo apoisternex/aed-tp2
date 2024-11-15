@@ -12,9 +12,13 @@ public class BestEffort {
 
     private ArrayList<Integer> ciudadesMaxGanancia;
     private ArrayList<Integer> ciudadesMaxPerdida;
+    private ArrayList<Integer> ciudadesMaxSuperavit;
 
-    private int cantTraslados;
-    private int totalTraslados;
+    private int gananciaTotal;
+    private int cantidadTraslados;
+
+    private DobleColaDePrioridad trasladosHeap;
+    private ColaDePrioridad ciudadesHeap;
 
     public BestEffort(int cantCiudades, Traslado[] traslados) {
         // Implementar
@@ -24,26 +28,51 @@ public class BestEffort {
         this.ciudadesMaxGanancia = new ArrayList<Integer>();
         this.ciudadesMaxPerdida = new ArrayList<Integer>();
 
-        this.cantTraslados = 0;
-        this.totalTraslados = 0;
+        this.gananciaTotal = 0;
+        this.cantidadTraslados = 0;
+
+        for(int i; i<traslados.length;i++){
+            trasladosHeap.encolar(traslados[i])
+            if (!(traslado[i].destino.pertenece(ciudades))) {
+                ciudades+=new Ciudad(traslados[i].destino, )
+            }
+            if (!(traslado[i].origen.pertenece(ciudades))) {
+                ciudades+=traslados[i].origen
+            }
+
+            traslados[i].
+        }
+
+        
+
     }
 
     public void registrarTraslados(Traslado[] traslados) {
+        for(n;  n>=0;   n--){
+            trasladosHeap.encolar(traslados[i])
+            gananciaTotal+=traslados[i].gananciaNeta;
+            cantTraslados+=1
+        }
     }
 
     public int[] despacharMasRedituables(int n) {
-        // Implementar
-        return null;
+        int[] trasladosRedituables=[];
+        for(n;  n>=0;   n--) {
+            trasladosRedituables+=trasladosHeap.desencolarA().id
+        }
+        return trasladosRedituables;
     }
 
     public int[] despacharMasAntiguos(int n) {
-        // Implementar
-        return null;
+        Traslados[] trasladosAntiguos=[]
+        for(n;  n>=0;   n--) {
+            trasladosAntiguos+=trasladosHeap.desencolarB().id
+        }
+        return trasladosRedituables;
     }
 
     public int ciudadConMayorSuperavit() {
-        // Implementar
-        return 0;
+        return this.ciudadConMayorSuperavit;
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia() {
@@ -55,8 +84,7 @@ public class BestEffort {
     }
 
     public int gananciaPromedioPorTraslado() {
-        // Implementar
-        return 0;
+        return this.gananciaTotal / this.cantTraslados;
     }
 
 }

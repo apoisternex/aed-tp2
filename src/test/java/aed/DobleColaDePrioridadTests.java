@@ -33,8 +33,8 @@ public class DobleColaDePrioridadTests {
         // t3 = new Traslado(3, 1, 2, 130, 3);
         // t4 = new Traslado(4, 1, 2, 5, 4);
 
-        t1 = new Traslado(1, 1, 2, 1, 100);
-        t2 = new Traslado(2, 1, 2, 200, 2);
+        t1 = new Traslado(1, 1, 2, 1, 1);
+        t2 = new Traslado(2, 1, 2, 0, 0);
         t3 = new Traslado(3, 1, 2, 3, 3);
         t4 = new Traslado(4, 1, 2, 4, 4);
     }
@@ -46,7 +46,21 @@ public class DobleColaDePrioridadTests {
         // t3 es el mas prioritario por su ganancia
         cola.encolar(t3);
         cola.encolar(t4);
-        assertEquals("holaa", cola.toString());
+    }
+
+    @Test
+    void desencolar() {
+        cola.encolar(t2);
+        cola.encolar(t1);
+        // // t3 es el mas prioritario por su ganancia
+        cola.encolar(t3);
+        cola.encolar(t4);
+
+        cola.desencolarA();
+        cola.desencolarB();
+        cola.desencolarA();
+        cola.desencolarB();
+
     }
 
 }

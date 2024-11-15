@@ -31,8 +31,17 @@ public class DobleColaDePrioridad<T> {
     private VectorComparable vB;
 
     private boolean enSync() {
-        // TODO: checkear si los heaps estan sincronizados
-        return false;
+        for (Nodo n : this.vA.elementos) {
+            if (n.val != this.vB.elementos.get(n.posEnOtra)) {
+                return false;
+            }
+        }
+        for (Nodo n : this.vB.elementos) {
+            if (n.val != this.vB.elementos.get(n.posEnOtra)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean esMaxHeap(VectorComparable v) {
@@ -70,12 +79,11 @@ public class DobleColaDePrioridad<T> {
     public void encolar(T e) {
         this.vA.elementos.add(new Nodo(e, this.vA.elementos.size()));
         this.vB.elementos.add(new Nodo(e, this.vB.elementos.size()));
-
         heapifearUno(vA, vB);
         assert (esMaxHeap(vA));
         heapifearUno(vB, vA);
         assert (esMaxHeap(vB));
-
+        assert (enSync()) : "no esta sincronizado";
     }
 
     public int heapifearUno(VectorComparable este, VectorComparable otro) { // O(log(n))

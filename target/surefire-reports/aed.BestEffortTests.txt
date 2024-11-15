@@ -1,9 +1,15 @@
 -------------------------------------------------------------------------------
 Test set: aed.BestEffortTests
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 2, Errors: 6, Skipped: 0, Time elapsed: 0.231 s <<< FAILURE! - in aed.BestEffortTests
-aed.BestEffortTests.agregar_traslados  Time elapsed: 0.107 s  <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" because "s2" is null
+Tests run: 8, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 0.188 s <<< FAILURE! - in aed.BestEffortTests
+aed.BestEffortTests.agregar_traslados  Time elapsed: 0.093 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:528)
 	at aed.BestEffortTests.assertSetEquals(BestEffortTests.java:34)
 	at aed.BestEffortTests.agregar_traslados(BestEffortTests.java:138)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -76,8 +82,14 @@ java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" becau
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.despachar_mas_viejo_de_a_varios  Time elapsed: 0.003 s  <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" because "s2" is null
+aed.BestEffortTests.despachar_mas_viejo_de_a_varios  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:528)
 	at aed.BestEffortTests.assertSetEquals(BestEffortTests.java:34)
 	at aed.BestEffortTests.despachar_mas_viejo_de_a_varios(BestEffortTests.java:99)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -150,7 +162,7 @@ java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" becau
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.mayor_superavit  Time elapsed: 0.017 s  <<< FAILURE!
+aed.BestEffortTests.mayor_superavit  Time elapsed: 0.002 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -229,7 +241,7 @@ org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.promedio_por_traslado  Time elapsed: 0.003 s  <<< FAILURE!
+aed.BestEffortTests.promedio_por_traslado  Time elapsed: 0.001 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <333> but was: <0>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -308,8 +320,14 @@ org.opentest4j.AssertionFailedError: expected: <333> but was: <0>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.despachar_con_mas_ganancia_de_a_uno  Time elapsed: 0.004 s  <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" because "s2" is null
+aed.BestEffortTests.despachar_con_mas_ganancia_de_a_uno  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:528)
 	at aed.BestEffortTests.assertSetEquals(BestEffortTests.java:34)
 	at aed.BestEffortTests.despachar_con_mas_ganancia_de_a_uno(BestEffortTests.java:50)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -382,8 +400,14 @@ java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" becau
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.despachar_mixtos  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" because "s2" is null
+aed.BestEffortTests.despachar_mixtos  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:528)
 	at aed.BestEffortTests.assertSetEquals(BestEffortTests.java:34)
 	at aed.BestEffortTests.despachar_mixtos(BestEffortTests.java:114)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -456,8 +480,14 @@ java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" becau
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.despachar_mas_viejo_de_a_uno  Time elapsed: 0.003 s  <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" because "s2" is null
+aed.BestEffortTests.despachar_mas_viejo_de_a_uno  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:528)
 	at aed.BestEffortTests.assertSetEquals(BestEffortTests.java:34)
 	at aed.BestEffortTests.despachar_mas_viejo_de_a_uno(BestEffortTests.java:82)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -530,8 +560,14 @@ java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" becau
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.despachar_con_mas_ganancia_de_a_varios  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.size()" because "s2" is null
+aed.BestEffortTests.despachar_con_mas_ganancia_de_a_varios  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:528)
 	at aed.BestEffortTests.assertSetEquals(BestEffortTests.java:34)
 	at aed.BestEffortTests.despachar_con_mas_ganancia_de_a_varios(BestEffortTests.java:66)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)

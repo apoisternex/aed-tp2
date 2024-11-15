@@ -29,7 +29,6 @@ public class BestEffort {
     }
 
     public void registrarTraslados(Traslado[] traslados) {
-        // Implementar
     }
 
     public int[] despacharMasRedituables(int n) {

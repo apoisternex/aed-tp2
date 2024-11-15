@@ -1,2 +1,8 @@
 /home/sf/Programming/aed-java/tp2/src/main/java/aed/BestEffort.java
+/home/sf/Programming/aed-java/tp2/src/main/java/aed/Ciudad.java
+/home/sf/Programming/aed-java/tp2/src/main/java/aed/ColaDePrioridad.java
+/home/sf/Programming/aed-java/tp2/src/main/java/aed/DobleColaDePrioridad.java
 /home/sf/Programming/aed-java/tp2/src/main/java/aed/Traslado.java
+/home/sf/Programming/aed-java/tp2/src/main/java/aed/TrasladoComparator.java
+/home/sf/Programming/aed-java/tp2/src/main/java/aed/TrasladoComparatorAntiguedad.java
+/home/sf/Programming/aed-java/tp2/src/main/java/aed/TrasladoComparatorRedituable.java

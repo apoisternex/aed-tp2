@@ -18,7 +18,7 @@ public class DobleColaDePrioridad<T> {
         }
 
         public String toString() {
-            return String.format("{ % ; % }", this.val, this.posEnOtra);
+            return "{ " + this.val + " ; " + this.posEnOtra + " }";
         }
     }
 
@@ -32,14 +32,16 @@ public class DobleColaDePrioridad<T> {
 
     private boolean enSync() {
         for (Nodo n : this.vA.elementos) {
-            if (n.val != this.vB.elementos.get(n.posEnOtra).val) {
-                return false;
-            }
+            assert (n.posEnOtra < this.vB.elementos.size())
+                    : "el nodo " + n + " en vA tiene una posEnOtra fuera de rango. " + this.toString();
+            assert (n.val == this.vB.elementos.get(n.posEnOtra).val)
+                    : "el nodo " + n + " en vA tiene un val != al del handle en vB" + this.toString();
         }
         for (Nodo n : this.vB.elementos) {
-            if (n.val != this.vA.elementos.get(n.posEnOtra).val) {
-                return false;
-            }
+            assert (n.posEnOtra < this.vA.elementos.size())
+                    : "el nodo " + n + " en vB tiene una posEnOtra fuera de rango. " + this.toString();
+            assert (n.val == this.vA.elementos.get(n.posEnOtra).val)
+                    : "el nodo " + n + " en vB tiene un val != al del handle en vA" + this.toString();
         }
         return true;
     }
@@ -61,6 +63,12 @@ public class DobleColaDePrioridad<T> {
         return true;
     }
 
+    private void checkInvRep() {
+        assert (esMaxHeap(vA)) : "vA no es max Heap";
+        assert (esMaxHeap(vB)) : "vB no es max Heap";
+        assert (enSync()) : "no estan sincronizados";
+    }
+
     // esto es un problema
     public DobleColaDePrioridad(Comparator<T> cA, Comparator<T> cB) {
 
@@ -80,13 +88,11 @@ public class DobleColaDePrioridad<T> {
         this.vA.elementos.add(new Nodo(e, this.vA.elementos.size()));
         this.vB.elementos.add(new Nodo(e, this.vB.elementos.size()));
         heapifearUno(vA, vB);
-        assert (esMaxHeap(vA));
         heapifearUno(vB, vA);
-        assert (esMaxHeap(vB));
-        assert (enSync()) : "no esta sincronizado";
+        checkInvRep();
     }
 
-    public int heapifearUno(VectorComparable este, VectorComparable otro) { // O(log(n))
+    private int heapifearUno(VectorComparable este, VectorComparable otro) { // O(log(n))
 
         int i = este.elementos.size() - 1; //
         boolean tienePadre = i > 0; //
@@ -145,10 +151,35 @@ public class DobleColaDePrioridad<T> {
     private T desencolarMax(VectorComparable este, VectorComparable otro) {
         T res = este.elementos.get(0).val;
         int posEnOtra = este.elementos.get(0).posEnOtra;
-        eliminar(este, otro, 0);
-        eliminar(otro, este, posEnOtra);
-        return res;
+        swap(este, otro, 0, este.elementos.size() - 1);
+        swap(otro, este, posEnOtra, otro.elementos.size() - 1);
+        este.elementos.remove(este.elementos.size() - 1);
+        otro.elementos.remove(otro.elementos.size() - 1);
 
+        heapifearDownUno(este, otro, 0);
+        heapifearDownUno(otro, este, posEnOtra);
+
+        checkInvRep();
+        return res;
+    }
+
+    private void heapifearDownUno(VectorComparable este, VectorComparable otro, int i) {
+        boolean tieneDosHijos = (2 * i + 2) < este.elementos.size();
+        boolean tieneUnHijo = (2 * i + 1) < este.elementos.size();
+
+        while (tieneDosHijos || tieneUnHijo) {
+            if (!tieneDosHijos) {
+                int hijo = 2 * i + 1;
+                i = siftDownUnHijo(este, otro, i, hijo);
+            } else {
+                int hijoIzq = 2 * i + 1;
+                int hijoDer = 2 * i + 2;
+                i = siftDownDosHijos(este, otro, i, hijoIzq, hijoDer);
+            }
+            tieneDosHijos = (2 * i + 2) < este.elementos.size();
+            tieneUnHijo = (2 * i + 1) < este.elementos.size();
+
+        }
     }
 
     public T desencolarA() {
@@ -197,7 +228,7 @@ public class DobleColaDePrioridad<T> {
             i = siftUp(este, otro, i, padre); // O(1) (siftUp es O(1)
             tienePadre = i > 0; //
         }
-
+        checkInvRep();
     }
 
     private void swap(VectorComparable este, VectorComparable otro, int i, int j) { // O(1)
@@ -229,92 +260,4 @@ public class DobleColaDePrioridad<T> {
         }
         return res;
     }
-
-    // public T DesencolarMax(ArrayList<T> elementos) {
-    // T res = elementos.get(0); //
-    // elementos.set(0, elementos.get(elementos.size() - 1)); //
-    // elementos.remove(elementos.size()); // O(1)
-    // int i = 0; //
-    // boolean tieneDosHijos = (2 * i + 2) < elementos.size(); //
-    // boolean tieneUnHijo = (2 * i + 1) < elementos.size(); //
-    //
-    // while (tieneDosHijos || tieneUnHijo) {
-    // if (!tieneDosHijos) {
-    // int hijo = 2 * i + 1;
-    // i = siftDownUnHijo(elementos, i, hijo);
-    // } else {
-    // int hijoIzq = 2 * i + 1;
-    // int hijoDer = 2 * i + 2;
-    // i = siftDownDosHijos(elementos, i, hijoIzq, hijoDer);
-    // }
-    // tieneDosHijos = (2 * i + 2) < elementos.size();
-    // tieneUnHijo = (2 * i + 1) < elementos.size();
-    //
-    // }
-    // return res;
-    // }
-    //
-    // private int siftDownUnHijo(ArrayList<T> elementos, int i, int hijo) {
-    // T valorI = elementos.get(i);
-    // T valorHijo = elementos.get(hijo);
-    //
-    // if (comparador.compare(valorI, valorHijo) < 0) {
-    // swap(elementos, i, hijo);
-    // return hijo;
-    // }
-    // return elementos.size();
-    // }
-    //
-    // private int siftDownDosHijos(ArrayList<T> elementos, int i, int hijoIzq, int
-    // hijoDer) {
-    // T valorI = elementos.get(i);
-    // T valorHijoDer = elementos.get(hijoDer);
-    // T valorHijoIzq = elementos.get(hijoIzq);
-    //
-    // if ((comparador.compare(valorI, valorHijoIzq) < 0) ||
-    // (comparador.compare(valorI, valorHijoDer) < 0)) {
-    // if (comparador.compare(valorHijoIzq, valorHijoDer) >= 0) {
-    // swap(elementos, i, hijoIzq);
-    // return hijoIzq;
-    // } else {
-    // swap(elementos, i, hijoDer);
-    // return hijoDer;
-    // }
-    // }
-    //
-    // return elementos.size();
-    // }
-    //
-    //
-    // private ArrayList<T> heapify(Comparator<T> c, T[] arrayBase) { // O(n) (TODO:
-    // FALTA EXPLICAR PQ)
-    // int longitud = arrayBase.length;
-    // Comparator<T> comparador = c;
-    // ArrayList<T> elementos = new ArrayList<T>(); // podriamos hacerlo en el
-    // lugar, quiero cambiar lo menos posible
-    // // el codigo
-    // for (int i = 0; i < arrayBase.length; i++) {
-    // elementos.add(arrayBase[i]);
-    // }
-    //
-    // for (int i = longitud - 1; i >= 0; i--) {
-    // int j = i;
-    // boolean tieneDosHijos = (2 * j + 2) < longitud;
-    // boolean tieneUnHijo = (2 * j + 1) < longitud;
-    // while (tieneUnHijo || tieneDosHijos) {
-    // if (!tieneDosHijos) {
-    // int hijo = 2 * j + 1;
-    // j = siftDownUnHijo(elementos, j, hijo);
-    // } else {
-    // int hijoIzq = 2 * j + 1;
-    // int hijoDer = 2 * j + 2;
-    // j = siftDownDosHijos(elementos, j, hijoIzq, hijoDer);
-    // }
-    // tieneDosHijos = (2 * j + 2) < longitud;
-    // tieneUnHijo = (2 * j + 1) < longitud;
-    // }
-    // }
-    // return elementos;
-    // }
-
 }

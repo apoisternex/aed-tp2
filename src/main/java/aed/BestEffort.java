@@ -31,48 +31,50 @@ public class BestEffort {
         this.gananciaTotal = 0;
         this.cantidadTraslados = 0;
 
-        for(int i; i<traslados.length;i++){
-            trasladosHeap.encolar(traslados[i])
-            if (!(traslado[i].destino.pertenece(ciudades))) {
-                ciudades+=new Ciudad(traslados[i].destino, )
-            }
-            if (!(traslado[i].origen.pertenece(ciudades))) {
-                ciudades+=traslados[i].origen
-            }
-
-            traslados[i].
-        }
-
-        
+        // for(int i; i<traslados.length;i++){
+        // trasladosHeap.encolar(traslados[i])
+        // if (!(traslado[i].destino.pertenece(ciudades))) {
+        // ciudades+=new Ciudad(traslados[i].destino, )
+        // }
+        // if (!(traslado[i].origen.pertenece(ciudades))) {
+        // ciudades+=traslados[i].origen
+        // }
+        //
+        // traslados[i].
+        // }
+        //
 
     }
 
     public void registrarTraslados(Traslado[] traslados) {
-        for(n;  n>=0;   n--){
-            trasladosHeap.encolar(traslados[i])
-            gananciaTotal+=traslados[i].gananciaNeta;
-            cantTraslados+=1
-        }
+        // for(n; n>=0; n--){
+        // trasladosHeap.encolar(traslados[i])
+        // gananciaTotal+=traslados[i].gananciaNeta;
+        // cantTraslados+=1
+        // }
     }
 
     public int[] despacharMasRedituables(int n) {
-        int[] trasladosRedituables=[];
-        for(n;  n>=0;   n--) {
-            trasladosRedituables+=trasladosHeap.desencolarA().id
-        }
-        return trasladosRedituables;
+        // int[] trasladosRedituables=[];
+        // for(n; n>=0; n--) {
+        // trasladosRedituables+=trasladosHeap.desencolarA().id
+        // }
+        // return trasladosRedituables;
+        return new int[2];
     }
 
     public int[] despacharMasAntiguos(int n) {
-        Traslados[] trasladosAntiguos=[]
-        for(n;  n>=0;   n--) {
-            trasladosAntiguos+=trasladosHeap.desencolarB().id
-        }
-        return trasladosRedituables;
+        // Traslados[] trasladosAntiguos=[]
+        // for(n; n>=0; n--) {
+        // trasladosAntiguos+=trasladosHeap.desencolarB().id
+        // }
+        // return trasladosRedituables;
+        return new int[2];
     }
 
     public int ciudadConMayorSuperavit() {
-        return this.ciudadConMayorSuperavit;
+        // return this.ciudadConMayorSuperavit;
+        return 2;
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia() {
@@ -84,7 +86,8 @@ public class BestEffort {
     }
 
     public int gananciaPromedioPorTraslado() {
-        return this.gananciaTotal / this.cantTraslados;
+        // return this.gananciaTotal / this.cantTraslados;
+        return 2;
     }
 
 }

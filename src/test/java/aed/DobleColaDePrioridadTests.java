@@ -32,7 +32,7 @@ public class DobleColaDePrioridadTests {
         // t2 = new Traslado(2, 1, 2, 20, 2);
         // t3 = new Traslado(3, 1, 2, 130, 3);
         // t4 = new Traslado(4, 1, 2, 5, 4);
-
+        // g t
         t1 = new Traslado(1, 1, 2, 1, 1);
         t2 = new Traslado(2, 1, 2, 0, 0);
         t3 = new Traslado(3, 1, 2, 3, 3);
@@ -56,8 +56,9 @@ public class DobleColaDePrioridadTests {
         cola.encolar(t3);
         cola.encolar(t4);
 
-        cola.desencolarA();
-        cola.desencolarB();
+        assertEquals(cola.desencolarA(), t2);
+        assertEquals("suhoes", cola.toString());
+        assertEquals(cola.desencolarB(), t4);
         cola.desencolarA();
         cola.desencolarB();
 

@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: aed.BestEffortTests
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 0.188 s <<< FAILURE! - in aed.BestEffortTests
-aed.BestEffortTests.agregar_traslados  Time elapsed: 0.093 s  <<< FAILURE!
+Tests run: 8, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 0.16 s <<< FAILURE! - in aed.BestEffortTests
+aed.BestEffortTests.agregar_traslados  Time elapsed: 0.07 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -82,7 +82,7 @@ org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.despachar_mas_viejo_de_a_varios  Time elapsed: 0.003 s  <<< FAILURE!
+aed.BestEffortTests.despachar_mas_viejo_de_a_varios  Time elapsed: 0.002 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -163,14 +163,14 @@ org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
 aed.BestEffortTests.mayor_superavit  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+org.opentest4j.AssertionFailedError: expected: <3> but was: <2>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
 	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:528)
-	at aed.BestEffortTests.mayor_superavit(BestEffortTests.java:187)
+	at aed.BestEffortTests.mayor_superavit(BestEffortTests.java:190)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
@@ -241,8 +241,8 @@ org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.promedio_por_traslado  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <333> but was: <0>
+aed.BestEffortTests.promedio_por_traslado  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <333> but was: <2>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
 	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
@@ -320,7 +320,7 @@ org.opentest4j.AssertionFailedError: expected: <333> but was: <0>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 
-aed.BestEffortTests.despachar_con_mas_ganancia_de_a_uno  Time elapsed: 0.003 s  <<< FAILURE!
+aed.BestEffortTests.despachar_con_mas_ganancia_de_a_uno  Time elapsed: 0.002 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)

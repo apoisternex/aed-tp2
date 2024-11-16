@@ -46,6 +46,10 @@ public class DobleColaDePrioridad<T> {
         return true;
     }
 
+    public boolean estaVacia() {
+        return this.vA.elementos.size() == 0;
+    }
+
     private boolean esMaxHeap(VectorComparable v) {
         for (int padre = 0; padre < v.elementos.size() / 2; padre++) {
             int hijoDer = 2 * padre + 2;

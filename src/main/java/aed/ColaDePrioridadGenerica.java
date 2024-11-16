@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class ColaDePrioridadGenerica<T> {
+
+    /** referencia opaca a un elemento en esta cola de prioridad */
     public class Handle {
         private int pos;
     }
@@ -21,7 +23,22 @@ public class ColaDePrioridadGenerica<T> {
         throw new UnsupportedOperationException("Feature incomplete. Contact assistance.");
     }
 
+    /**
+     * crea un una cola de prioridad a partir de un array.
+     * /* Retorna un array de handles a cada elemento en el orden de arrayBase
+     */
     public Handle[] ColaDePrioridad(Comparator<T> c, T[] arrayBase) {
+        throw new UnsupportedOperationException("Feature incomplete. Contact assistance.");
+    }
+
+    // seteas el elemento en h pero asegurando que no va a cambiar su pos en la cola
+    // de Prioridad
+    public void setRapido(Handle h, T v) { // O(1)
+        throw new UnsupportedOperationException("Feature incomplete. Contact assistance.");
+    }
+
+    // seteas el elemento en h.
+    public void set(Handle h, T v) { // O(log(n))
         throw new UnsupportedOperationException("Feature incomplete. Contact assistance.");
     }
 

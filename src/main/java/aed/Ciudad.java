@@ -5,7 +5,7 @@ public class Ciudad {
     int perdida;
     int ganancia;
 
-    public Ciudad() {
+    public Ciudad(int id) {
         this.ganancia = 0;
         this.perdida = 0;
     }

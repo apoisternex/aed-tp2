@@ -37,7 +37,7 @@ public class BestEffort {
         this.handlesCiudades = new ArrayList<ColaDePrioridadGenerica<Ciudad>.Handle>();
 
         for (int i = 0; i < cantCiudades; i++) { // checkear complejidad
-            this.handlesCiudades.add(this.ciudadesPorSuperavit.encolar(new Ciudad()));
+            this.handlesCiudades.add(this.ciudadesPorSuperavit.encolar(new Ciudad(i)));
         }
     }
 
@@ -50,7 +50,15 @@ public class BestEffort {
     public int[] despacharMasRedituables(int n) {
         int[] res = new int[n];
         for (int i = 0; i < n; i++) { // checkear complejidad
-            this.trasladosHeap.desencolarB();
+            Traslado t = this.trasladosHeap.desencolarB();
+
+            Ciudad origen = new Ciudad(t.origen);
+            origen.sumarPerdida(t.gananciaNeta);
+            this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.origen), origen);
+
+            Ciudad destino = new Ciudad(t.origen);
+            destino.sumarGanancia(t.gananciaNeta);
+            this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.destino), destino);
         }
         return res;
     }
@@ -65,8 +73,7 @@ public class BestEffort {
     }
 
     public int ciudadConMayorSuperavit() {
-        // return this.ciudadConMayorSuperavit;
-        return 2;
+        return this.ciudadesPorSuperavit.MasPrioritario().id;
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia() {
@@ -78,8 +85,7 @@ public class BestEffort {
     }
 
     public int gananciaPromedioPorTraslado() {
-        // return this.gananciaTotal / this.cantTraslados;
-        return 2;
+        return this.gananciaTotal / this.cantTraslados;
     }
 
 }

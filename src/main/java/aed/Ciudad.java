@@ -1,9 +1,9 @@
 package aed;
 
 public class Ciudad {
-    private int id;
-    private int perdida;
-    private int ganancia;
+    int id;
+    int perdida;
+    int ganancia;
 
     public Ciudad() {
         this.ganancia = 0;

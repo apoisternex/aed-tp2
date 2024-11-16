@@ -69,6 +69,35 @@ public class DobleColaDePrioridad<T> {
         assert (enSync()) : "no estan sincronizados";
     }
 
+    public DobleColaDePrioridad(Comparator<T> cA, Comparator<T> cB, T[] arrayBase) { // O(n) (TODO:FALTA EXPLICAR PQ)
+
+        this.vA = new VectorComparable();
+        this.vB = new VectorComparable();
+        this.vA.elementos = convertirTrasladosANodos(arrayBase);
+        this.vB.elementos = convertirTrasladosANodos(arrayBase);
+        this.vA.comparador = cA;
+        this.vB.comparador = cB;
+
+        algoritmoFloyd(vA, vB);
+        algoritmoFloyd(vB, vA);
+    }
+
+    private ArrayList<Nodo> convertirTrasladosANodos(T[] traslados) {
+        ArrayList<Nodo> res = new ArrayList<Nodo>();
+        for (int i = 0; i < traslados.length; i++) {
+            Nodo n = new Nodo(traslados[i], i);
+            res.add(n);
+        }
+        return res;
+    }
+
+    private void algoritmoFloyd(VectorComparable este, VectorComparable otro) {
+
+        for (int i = este.elementos.size() - 1; i >= 0; i--) {
+            heapifearDownUno(este, otro, i);
+        }
+    }
+
     // esto es un problema
     public DobleColaDePrioridad(Comparator<T> cA, Comparator<T> cB) {
 

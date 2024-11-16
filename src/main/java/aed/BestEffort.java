@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class BestEffort {
     // Completar atributos privados
-    private Ciudad[] ciudades;
     private int maxPerdida;
     private int maxGanancia;
 
@@ -17,12 +16,12 @@ public class BestEffort {
     private int gananciaTotal;
     private int cantidadTraslados;
 
-    private DobleColaDePrioridad trasladosHeap;
-    private ColaDePrioridad ciudadesHeap;
+    private DobleColaDePrioridad<Traslado> trasladosHeap;
+    private ColaDePrioridadGenerica<Ciudad> ciudadesPorSuperavit;
+    private ArrayList<ColaDePrioridadGenerica<Ciudad>.Handle> handlesCiudades;
 
     public BestEffort(int cantCiudades, Traslado[] traslados) {
         // Implementar
-        this.ciudades = new Ciudad[cantCiudades];
         this.maxPerdida = 0;
         this.maxGanancia = 0;
         this.ciudadesMaxGanancia = new ArrayList<Integer>();
@@ -31,36 +30,28 @@ public class BestEffort {
         this.gananciaTotal = 0;
         this.cantidadTraslados = 0;
 
-        // for(int i; i<traslados.length;i++){
-        // trasladosHeap.encolar(traslados[i])
-        // if (!(traslado[i].destino.pertenece(ciudades))) {
-        // ciudades+=new Ciudad(traslados[i].destino, )
-        // }
-        // if (!(traslado[i].origen.pertenece(ciudades))) {
-        // ciudades+=traslados[i].origen
-        // }
-        //
-        // traslados[i].
-        // }
-        //
+        this.trasladosHeap = new DobleColaDePrioridad<Traslado>(new TrasladoComparatorAntiguedad(),
+                new TrasladoComparatorRedituable(), traslados);
 
+        this.ciudadesPorSuperavit = new ColaDePrioridadGenerica<Ciudad>(new CiudadComparator());
+        this.handlesCiudades = new ArrayList<ColaDePrioridadGenerica<Ciudad>.Handle>();
+
+        for (int i = 0; i < cantCiudades; i++) { // checkear complejidad
+            this.handlesCiudades.add(this.ciudadesPorSuperavit.encolar(new Ciudad()));
+        }
     }
 
     public void registrarTraslados(Traslado[] traslados) {
-        // for(n; n>=0; n--){
-        // trasladosHeap.encolar(traslados[i])
-        // gananciaTotal+=traslados[i].gananciaNeta;
-        // cantTraslados+=1
-        // }
+        for (Traslado t : traslados) {
+            this.trasladosHeap.encolar(t);
+        }
     }
 
     public int[] despacharMasRedituables(int n) {
-        // int[] trasladosRedituables=[];
-        // for(n; n>=0; n--) {
-        // trasladosRedituables+=trasladosHeap.desencolarA().id
-        // }
-        // return trasladosRedituables;
-        return new int[2];
+        for (int i = 0; i < n; i++) { // checkear complejidad
+            this.trasladosHeap.desencolarB();
+        }
+        return new int[n];
     }
 
     public int[] despacharMasAntiguos(int n) {

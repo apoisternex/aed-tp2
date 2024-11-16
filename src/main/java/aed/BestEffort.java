@@ -48,10 +48,11 @@ public class BestEffort {
     }
 
     public int[] despacharMasRedituables(int n) {
+        int[] res = new int[n];
         for (int i = 0; i < n; i++) { // checkear complejidad
             this.trasladosHeap.desencolarB();
         }
-        return new int[n];
+        return res;
     }
 
     public int[] despacharMasAntiguos(int n) {

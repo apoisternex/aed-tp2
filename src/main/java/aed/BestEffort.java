@@ -55,12 +55,11 @@ public class BestEffort {
     }
 
     public int[] despacharMasRedituables(int n) {
-        // int[] trasladosRedituables=[];
-        // for(n; n>=0; n--) {
-        // trasladosRedituables+=trasladosHeap.desencolarA().id
-        // }
-        // return trasladosRedituables;
-        return new int[2];
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) { // checkear complejidad
+            this.trasladosHeap.desencolarB();
+        }
+        return res;
     }
 
     public int[] despacharMasAntiguos(int n) {

@@ -160,11 +160,8 @@ public class DobleColaDePrioridad<T> {
         Nodo nodoJ = este.elementos.get(j); // O(1)
         este.elementos.set(i, nodoJ); // O(1)
         este.elementos.set(j, nodoI); // O(1)
-        if (nodoI.posEnOtra < otro.elementos.size() && nodoJ.posEnOtra < otro.elementos.size()) { // O(1)
-            otro.elementos.get(nodoI.posEnOtra).posEnOtra = j; // O(1)
-            otro.elementos.get(nodoJ.posEnOtra).posEnOtra = i;// O(1)
-        }
-
+        otro.elementos.get(nodoI.posEnOtra).posEnOtra = j; // O(1)
+        otro.elementos.get(nodoJ.posEnOtra).posEnOtra = i;// O(1)
     }
 
     public T MasPrioritario(ArrayList<T> elementos) { // O(1)

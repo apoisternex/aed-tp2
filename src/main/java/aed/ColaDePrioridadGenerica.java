@@ -29,13 +29,13 @@ public class ColaDePrioridadGenerica<T> {
     private ArrayList<Nodo> elementos;
     private Comparator<T> comparador;
 
-    public ColaDePrioridadGenerica(Comparator<T> c) {
-        this.elementos = new ArrayList<Nodo>();
-        this.comparador = c;
+    public ColaDePrioridadGenerica(Comparator<T> c) { // O(1)
+        this.elementos = new ArrayList<Nodo>(); // O(1)
+        this.comparador = c; // O(1)
     }
 
-    public T get(Handle h) {
-        return this.elementos.get(h.pos).v;
+    public T get(Handle h) { // O(1)
+        return this.elementos.get(h.pos).v; // O(1)
     }
 
     /**
@@ -43,18 +43,18 @@ public class ColaDePrioridadGenerica<T> {
      * /* Retorna un array de handles a cada elemento en el orden de arrayBase
      */
 
-    public ColaDePrioridadGenerica(Comparator<T> c, T[] arrayBase) {
+    public ColaDePrioridadGenerica(Comparator<T> c, T[] arrayBase) { // O(n)
         this.comparador = c;
         this.elementos = new ArrayList<Nodo>();
         for (int i = 0; i < arrayBase.length; i++) { // O(n)
             Nodo nuevoNodo = new Nodo(arrayBase[i], this.elementos); // O(1)
-            this.elementos.add(nuevoNodo);
+            this.elementos.add(nuevoNodo); // O(1)
         }
         for (int i = this.elementos.size() - 1; i >= 0; i--) { // O(n) algoritmo de Floyd
             heapifearDown(i);
         }
 
-        assert (esMaxHeap());
+        assert (esMaxHeap()); // esto se puede comentar, solo lo usamos para testear
     }
 
     public ArrayList<Handle> verHandles() { // O(n)
@@ -65,6 +65,10 @@ public class ColaDePrioridadGenerica<T> {
         return res;
     }
 
+    // Advertencia: Usar esto en las funciones obviamente nos cambia la complejidad,
+    // pero lo tomamos como parte del testing,
+    // y en caso de implementarse este sistema, sería eliminado de acá y delegado al
+    // script de testing
     private boolean esMaxHeap() {
         for (int padre = 0; padre < this.elementos.size() / 2; padre++) {
             int hijoDer = 2 * padre + 2;
@@ -85,14 +89,14 @@ public class ColaDePrioridadGenerica<T> {
     // seteas el elemento en h pero asegurando que no va a cambiar su pos en la cola
     // de Prioridad
     public void setRapido(Handle h, T v) { // O(1)
-        this.elementos.get(h.pos).v = v;
+        this.elementos.get(h.pos).v = v; // O(1)
     }
 
     // seteas el elemento en h.
     public void set(Handle h, T v) { // O(log(n))
-        this.elementos.get(h.pos).v = v;
+        this.elementos.get(h.pos).v = v; // O(1)
 
-        heapifearUno(h.pos);
+        heapifearUno(h.pos); // O(log(n))
 
     }
 
@@ -114,7 +118,7 @@ public class ColaDePrioridadGenerica<T> {
         return this.elementos.size() == 0; // O(1)
     }
 
-    public Handle encolar(T e) {
+    public Handle encolar(T e) { // O(log(n))
 
         Nodo nuevoNodo = new Nodo(e, this.elementos); // O(1)
         this.elementos.add(nuevoNodo); // O(1)
@@ -124,12 +128,11 @@ public class ColaDePrioridadGenerica<T> {
 
         while (tienePadre) { // O(log(n))-> El while se ejecuta en peor caso Log(h) veces, h = altura del
                              // heap)
-                             // me parece que this comentario esta mal, es lineal con respecto a la altura
             int padre = (i - 1) / 2; //
             i = siftUp(i, padre); // O(1)->siftUp es O(1)
-            tienePadre = i > 0; //
+            tienePadre = i > 0; // O(1)
         }
-        assert (esMaxHeap());
+        assert (esMaxHeap()); // esto se puede comentar, solo lo usamos para testear
         return nuevoNodo.handle;
     }
 
@@ -158,25 +161,25 @@ public class ColaDePrioridadGenerica<T> {
         return elementos.get(0).v; // O(1)
     }
 
-    public T desencolarMax() {
+    public T desencolarMax() { // O(log(n))
         T res = this.elementos.get(0).v; // O(1)
 
         swap(0, this.elementos.size() - 1); // O(1)
         this.elementos.remove(this.elementos.size() - 1); // O(1)
         heapifearDown(0); // O(log(n))-> heapifearDown es O(1)
 
-        assert (esMaxHeap());
+        assert (esMaxHeap()); // esto se puede comentar, solo lo usamos para testear
         return res;
     }
 
-    public T eliminar(Handle h) {
+    public T eliminar(Handle h) { // O(log(n))
         T res = this.elementos.get(h.pos).v; // O(1)
 
         swap(h.pos, this.elementos.size() - 1); // O(1)
         this.elementos.remove(this.elementos.size() - 1); // O(1)
         heapifearDown(h.pos); // O(log(n))
 
-        assert (esMaxHeap());
+        assert (esMaxHeap()); // esto se puede comentar, solo lo usamos para testear
         return res;
     }
 

@@ -1,18 +1,11 @@
 package aed;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.Test;
-
-import aed.ColaDePrioridadGenerica.Handle;
-
 import org.junit.jupiter.api.BeforeEach;
 
 public class ColaDePrioridadTests {
@@ -30,7 +23,7 @@ public class ColaDePrioridadTests {
         comparadorT = new TrasladoComparatorRedituable();
         cola = new ColaDePrioridadGenerica<Traslado>(comparadorT);
 
-        t1 = new Traslado(1, 1, 2, 5, 1);
+        t1 = new Traslado(1, 1, 2, 8, 1);
         t2 = new Traslado(2, 1, 2, 72, 2);
         t3 = new Traslado(3, 1, 2, 130, 3);
         t4 = new Traslado(4, 1, 2, 6, 4);
@@ -56,7 +49,6 @@ public class ColaDePrioridadTests {
 
     @Test
     void desencolar() {
-        // TODO: ver algun caso donde hay algunos con la misma prioridad
         cola.encolar(t1);
         cola.encolar(t2);
         // t3 es el mas prioritario por su ganancia
@@ -64,15 +56,15 @@ public class ColaDePrioridadTests {
         cola.encolar(t4);
         assertEquals(cola.vacia(), false);
         assertEquals(cola.MasPrioritario(), t3);
-        // cola.DesencolarMax();
-        // assertEquals(cola.MasPrioritario(), t2);
-        // cola.DesencolarMax();
-        // assertEquals(cola.MasPrioritario(), t1);
-        // cola.DesencolarMax();
-        // assertEquals(cola.vacia(), false);
-        // assertEquals(cola.MasPrioritario(), t4);
-        // cola.DesencolarMax();
-        // assertEquals(cola.vacia(), true);
+        cola.desencolarMax();
+        assertEquals(cola.MasPrioritario(), t2);
+        cola.desencolarMax();
+        assertEquals(cola.MasPrioritario(), t1);
+        cola.desencolarMax();
+        assertEquals(cola.vacia(), false);
+        assertEquals(cola.MasPrioritario(), t4);
+        cola.desencolarMax();
+        assertEquals(cola.vacia(), true);
     }
 
     @Test
@@ -89,6 +81,7 @@ public class ColaDePrioridadTests {
 
         assertEquals(colaNumeros.MasPrioritario(), 10);
 
+        // Uno de los que tenía menos prioridad, pasa a ser el que más tiene.
         colaNumeros.set(handles.get(1), 30);
 
         assertEquals(colaNumeros.MasPrioritario(), 30);
@@ -101,7 +94,7 @@ public class ColaDePrioridadTests {
         int i = 0;
 
         while (i < cantElementosATestear) {
-            // origen y destino nos dan lo mismo para este test
+            // origen y destino podemos ignorarlos para este test
             Traslado newT = new Traslado(i, 1, 2, i, i);
             bolsaTraslados.add(newT);
 
@@ -111,8 +104,6 @@ public class ColaDePrioridadTests {
 
         ColaDePrioridadGenerica<Traslado> colaAHeapyfiear = new ColaDePrioridadGenerica<Traslado>(comparadorT2,
                 bolsaTraslados.toArray(new Traslado[0]));
-        // ColaDePrioridad<Traslado>(comparadorT,
-        // bolsaTraslados.toArray(new Traslado[0]));
 
         // ----------- Test encolar -----------
 
@@ -142,8 +133,6 @@ public class ColaDePrioridadTests {
 
         }
         assertEquals(cola.MasPrioritario().id, bolsaTraslados.get(0).id);
-        // assertEquals(colaAHeapyfiear.MasPrioritario().id, bolsaTraslados.get(0).id);
-
     }
 
 }

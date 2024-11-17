@@ -50,20 +50,86 @@ public class BestEffort {
     public int[] despacharMasRedituables(int n) {
         int[] res = new int[n];
         for (int i = 0; i < n; i++) { // checkear complejidad
-            if (!this.trasladosHeap.estaVacia()) {
-                Traslado t = this.trasladosHeap.desencolarB();
-
-                this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.origen)).sumarPerdida(t.gananciaNeta);
-                this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.destino)).sumarGanancia(t.gananciaNeta);
-
-                this.cantidadTraslados++;
+            if (this.trasladosHeap.estaVacia()) {
+                return res;
             }
+            Traslado t = this.trasladosHeap.desencolarB();
+
+            Ciudad nuevoOrigen = new Ciudad(t.origen);
+            Ciudad viejoOrigen = this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.origen));
+            nuevoOrigen.ganancia = viejoOrigen.ganancia + t.gananciaNeta;
+            nuevoOrigen.perdida = viejoOrigen.perdida;
+
+            Ciudad nuevoDestino = new Ciudad(t.destino);
+            Ciudad viejoDestino = this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.destino));
+            nuevoDestino.perdida = viejoDestino.perdida + t.gananciaNeta;
+            nuevoDestino.ganancia = viejoDestino.ganancia;
+
+            ciudadesPorSuperavit.set(this.handlesCiudades.get(t.origen), nuevoOrigen);
+            ciudadesPorSuperavit.set(this.handlesCiudades.get(t.destino), nuevoDestino);
+
+            this.cantidadTraslados++;
+
+            if (nuevoOrigen.ganancia > this.maxGanancia) {
+                this.maxGanancia = nuevoOrigen.ganancia;
+                this.ciudadesMaxGanancia.clear();
+                this.ciudadesMaxGanancia.add(t.origen);
+            } else if (nuevoOrigen.ganancia == this.maxGanancia) {
+                this.ciudadesMaxGanancia.add(t.origen);
+            }
+
+            if (nuevoDestino.perdida > this.maxPerdida) {
+                this.maxPerdida = nuevoDestino.perdida;
+                this.ciudadesMaxPerdida.clear();
+                this.ciudadesMaxPerdida.add(t.destino);
+            } else if (nuevoDestino.perdida == this.maxPerdida) {
+                this.ciudadesMaxPerdida.add(t.destino);
+            }
+            res[i] = t.id;
         }
         return res;
     }
 
     public int[] despacharMasAntiguos(int n) {
-        return new int[n];
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) { // checkear complejidad
+            if (trasladosHeap.estaVacia()) {
+                return res;
+            }
+            Traslado t = this.trasladosHeap.desencolarA();
+
+            Ciudad nuevoOrigen = new Ciudad(t.origen);
+            Ciudad viejoOrigen = this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.origen));
+            nuevoOrigen.ganancia = viejoOrigen.ganancia + t.gananciaNeta;
+            nuevoOrigen.perdida = viejoOrigen.perdida;
+
+            Ciudad nuevoDestino = new Ciudad(t.destino);
+            Ciudad viejoDestino = this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.destino));
+            nuevoDestino.perdida = viejoDestino.perdida + t.gananciaNeta;
+            nuevoDestino.ganancia = viejoDestino.ganancia;
+
+            this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.destino), nuevoDestino);
+            this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.origen), nuevoOrigen);
+
+            if (nuevoOrigen.ganancia > this.maxGanancia) {
+                this.maxGanancia = nuevoOrigen.ganancia;
+                this.ciudadesMaxGanancia.clear();
+                this.ciudadesMaxGanancia.add(t.origen);
+            } else if (nuevoOrigen.ganancia == this.maxGanancia) {
+                this.ciudadesMaxGanancia.add(t.origen);
+            }
+
+            if (nuevoDestino.perdida > this.maxPerdida) {
+                this.maxPerdida = nuevoDestino.perdida;
+                this.ciudadesMaxPerdida.clear();
+                this.ciudadesMaxPerdida.add(t.destino);
+            } else if (nuevoDestino.perdida == this.maxPerdida) {
+                this.ciudadesMaxPerdida.add(t.destino);
+            }
+
+            res[i] = t.id;
+        }
+        return res;
     }
 
     public int ciudadConMayorSuperavit() {

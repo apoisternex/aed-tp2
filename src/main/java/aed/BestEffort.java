@@ -52,9 +52,7 @@ public class BestEffort {
         for (int i = 0; i < n; i++) { // checkear complejidad
             Traslado t = this.trasladosHeap.desencolarB();
 
-            Ciudad origen = new Ciudad(t.origen);
-            origen.sumarPerdida(t.gananciaNeta);
-            this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.origen), origen);
+            this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.origen)).sumarPerdida(t.gananciaNeta);
 
             Ciudad destino = new Ciudad(t.origen);
             destino.sumarGanancia(t.gananciaNeta);

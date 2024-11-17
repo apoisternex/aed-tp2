@@ -34,6 +34,10 @@ public class ColaDePrioridadGenerica<T> {
         this.comparador = c;
     }
 
+    public T get(Handle h) {
+        return this.elementos.get(h.pos).v;
+    }
+
     /**
      * crea un una cola de prioridad a partir de un array.
      * /* Retorna un array de handles a cada elemento en el orden de arrayBase

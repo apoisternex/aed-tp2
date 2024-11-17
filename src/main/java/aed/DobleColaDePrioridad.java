@@ -27,10 +27,6 @@ public class DobleColaDePrioridad<T> {
     private VectorComparable vA;
     private VectorComparable vB;
 
-    public boolean estaVacia() { // O(1)
-        return this.vA.elementos.size() == 0; // O(1)
-    }
-
     public DobleColaDePrioridad(Comparator<T> cA, Comparator<T> cB, T[] arrayBase) { // O(n)
 
         this.vA = new VectorComparable(); //
@@ -44,21 +40,6 @@ public class DobleColaDePrioridad<T> {
         algoritmoFloyd(vB, vA); // O(n)
     }
 
-    private ArrayList<Nodo> convertirTrasladosANodos(T[] traslados) { // O(n)
-        ArrayList<Nodo> res = new ArrayList<Nodo>();
-        for (int i = 0; i < traslados.length; i++) { // n veces
-            Nodo n = new Nodo(traslados[i], i);
-            res.add(n); // O(1)
-        }
-        return res;
-    }
-
-    private void algoritmoFloyd(VectorComparable este, VectorComparable otro) { // O(n)
-        for (int i = este.elementos.size() - 1; i >= 0; i--) {
-            heapifearDownUno(este, otro, i);
-        }
-    }
-
     public DobleColaDePrioridad(Comparator<T> cA, Comparator<T> cB) { // Asignaciones básicas, todo O(1)
         this.vA = new VectorComparable();
         this.vB = new VectorComparable();
@@ -68,16 +49,35 @@ public class DobleColaDePrioridad<T> {
         this.vB.comparador = cB;
     }
 
-    public boolean vacia(ArrayList<T> elementos) { // O(1)
-        return elementos.size() == 0; // O(1)
-    }
-
     public void encolar(T e) { // log(n)
         this.vA.elementos.add(new Nodo(e, this.vA.elementos.size())); // O(1)
         this.vB.elementos.add(new Nodo(e, this.vB.elementos.size())); // O(1)
         heapifearUno(vA, vB); // O(log(n))
         heapifearUno(vB, vA); // O(log(n))
         checkInvRep(); // esto se puede comentar, solo lo usamos para testear
+    }
+
+    public T desencolarA() { // O(log(n))
+        return desencolarMax(vA, vB);
+    }
+
+    public T desencolarB() { // O(log(n))
+        return desencolarMax(vB, vA);
+    }
+
+    private T desencolarMax(VectorComparable este, VectorComparable otro) { // O(log(n))
+        T res = este.elementos.get(0).val; // O(1)
+        int posEnOtra = este.elementos.get(0).posEnOtra; // O(1)
+        swap(este, otro, 0, este.elementos.size() - 1); // O(1)
+        swap(otro, este, posEnOtra, otro.elementos.size() - 1); // O(1)
+        este.elementos.remove(este.elementos.size() - 1); // O(1)
+        otro.elementos.remove(otro.elementos.size() - 1); // (1)
+
+        heapifearDownUno(este, otro, 0); // O(log(n))
+        heapifearDownUno(otro, este, posEnOtra); // O(log(n))
+
+        checkInvRep(); // esto se puede comentar, solo lo usamos para testear
+        return res;
     }
 
     private int heapifearUno(VectorComparable este, VectorComparable otro) { // O(log(n))
@@ -92,6 +92,25 @@ public class DobleColaDePrioridad<T> {
             tienePadre = i > 0; // O(1)
         }
         return i;
+    }
+
+    private void heapifearDownUno(VectorComparable este, VectorComparable otro, int i) { // O(log(n))
+        boolean tieneDosHijos = (2 * i + 2) < este.elementos.size(); // O(1)
+        boolean tieneUnHijo = (2 * i + 1) < este.elementos.size(); // O(1)
+
+        while (tieneDosHijos || tieneUnHijo) { // Como mucho la altura del heap. O(log(n)).
+            if (!tieneDosHijos) {
+                int hijo = 2 * i + 1; // O(1)
+                i = siftDownUnHijo(este, otro, i, hijo); // O(1)
+            } else {
+                int hijoIzq = 2 * i + 1; // O(1)
+                int hijoDer = 2 * i + 2; // O(1)
+                i = siftDownDosHijos(este, otro, i, hijoIzq, hijoDer); // O(1)
+            }
+            tieneDosHijos = (2 * i + 2) < este.elementos.size(); // O(1)
+            tieneUnHijo = (2 * i + 1) < este.elementos.size(); // O(1)
+
+        }
     }
 
     private int siftUp(VectorComparable este, VectorComparable otro, int i, int padre) { // O(1)
@@ -135,48 +154,6 @@ public class DobleColaDePrioridad<T> {
         return este.elementos.size();
     }
 
-    private T desencolarMax(VectorComparable este, VectorComparable otro) { // O(log(n))
-        T res = este.elementos.get(0).val; // O(1)
-        int posEnOtra = este.elementos.get(0).posEnOtra; // O(1)
-        swap(este, otro, 0, este.elementos.size() - 1); // O(1)
-        swap(otro, este, posEnOtra, otro.elementos.size() - 1); // O(1)
-        este.elementos.remove(este.elementos.size() - 1); // O(1)
-        otro.elementos.remove(otro.elementos.size() - 1); // (1)
-
-        heapifearDownUno(este, otro, 0); // O(log(n))
-        heapifearDownUno(otro, este, posEnOtra); // O(log(n))
-
-        checkInvRep(); // esto se puede comentar, solo lo usamos para testear
-        return res;
-    }
-
-    private void heapifearDownUno(VectorComparable este, VectorComparable otro, int i) { // O(log(n))
-        boolean tieneDosHijos = (2 * i + 2) < este.elementos.size(); // O(1)
-        boolean tieneUnHijo = (2 * i + 1) < este.elementos.size(); // O(1)
-
-        while (tieneDosHijos || tieneUnHijo) { // Como mucho la altura del heap. O(log(n)).
-            if (!tieneDosHijos) {
-                int hijo = 2 * i + 1; // O(1)
-                i = siftDownUnHijo(este, otro, i, hijo); // O(1)
-            } else {
-                int hijoIzq = 2 * i + 1; // O(1)
-                int hijoDer = 2 * i + 2; // O(1)
-                i = siftDownDosHijos(este, otro, i, hijoIzq, hijoDer); // O(1)
-            }
-            tieneDosHijos = (2 * i + 2) < este.elementos.size(); // O(1)
-            tieneUnHijo = (2 * i + 1) < este.elementos.size(); // O(1)
-
-        }
-    }
-
-    public T desencolarA() { // O(log(n))
-        return desencolarMax(vA, vB);
-    }
-
-    public T desencolarB() { // O(log(n))
-        return desencolarMax(vB, vA);
-    }
-
     private void swap(VectorComparable este, VectorComparable otro, int i, int j) { // O(1)
         // es este el unico lugar donde cambiamos cosas de lugar?
         Nodo nodoI = este.elementos.get(i); // O(1)
@@ -194,6 +171,25 @@ public class DobleColaDePrioridad<T> {
         return elementos.get(0);
     }
 
+    public boolean estaVacia() { // O(1)
+        return this.vA.elementos.size() == 0; // O(1)
+    }
+
+    private void algoritmoFloyd(VectorComparable este, VectorComparable otro) { // O(n)
+        for (int i = este.elementos.size() - 1; i >= 0; i--) {
+            heapifearDownUno(este, otro, i);
+        }
+    }
+
+    private ArrayList<Nodo> convertirTrasladosANodos(T[] traslados) { // O(n)
+        ArrayList<Nodo> res = new ArrayList<Nodo>();
+        for (int i = 0; i < traslados.length; i++) { // n veces
+            Nodo n = new Nodo(traslados[i], i);
+            res.add(n); // O(1)
+        }
+        return res;
+    }
+
     public String toString() {
         String res = "";
         for (Nodo n : this.vA.elementos) {
@@ -205,6 +201,8 @@ public class DobleColaDePrioridad<T> {
         }
         return res;
     }
+
+    // ---------------- Tests -----------------
 
     private boolean enSync() {
         for (Nodo n : this.vA.elementos) {

@@ -34,10 +34,6 @@ public class ColaDePrioridadGenerica<T> {
         this.comparador = c; // O(1)
     }
 
-    public T get(Handle h) { // O(1)
-        return this.elementos.get(h.pos).v; // O(1)
-    }
-
     /**
      * crea un una cola de prioridad a partir de un array.
      * /* Retorna un array de handles a cada elemento en el orden de arrayBase
@@ -57,67 +53,6 @@ public class ColaDePrioridadGenerica<T> {
         assert (esMaxHeap()); // esto se puede comentar, solo lo usamos para testear
     }
 
-    public ArrayList<Handle> verHandles() { // O(n)
-        ArrayList<Handle> res = new ArrayList<Handle>();
-        for (Nodo n : this.elementos) { // O(n)
-            res.add(n.handle); // O(1)
-        }
-        return res;
-    }
-
-    // Advertencia: Usar esto en las funciones obviamente nos cambia la complejidad,
-    // pero lo tomamos como parte del testing,
-    // y en caso de implementarse este sistema, sería eliminado de acá y delegado al
-    // script de testing
-    private boolean esMaxHeap() {
-        for (int padre = 0; padre < this.elementos.size() / 2; padre++) {
-            int hijoDer = 2 * padre + 2;
-            int hijoIzq = 2 * padre + 1;
-
-            if (hijoDer < this.elementos.size()
-                    && this.comparador.compare(this.elementos.get(padre).v, this.elementos.get(hijoDer).v) < 0) {
-                return false;
-            }
-            if (hijoIzq < this.elementos.size()
-                    && this.comparador.compare(this.elementos.get(padre).v, this.elementos.get(hijoIzq).v) < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // seteas el elemento en h pero asegurando que no va a cambiar su pos en la cola
-    // de Prioridad
-    public void setRapido(Handle h, T v) { // O(1)
-        this.elementos.get(h.pos).v = v; // O(1)
-    }
-
-    // seteas el elemento en h.
-    public void set(Handle h, T v) { // O(log(n))
-        this.elementos.get(h.pos).v = v; // O(1)
-
-        heapifearUno(h.pos); // O(log(n))
-
-    }
-
-    private void heapifearUno(int i) { // O(log(n))
-        Nodo nuestroNodo = this.elementos.get(i); // O(1)
-        boolean tienePadre = i > 0; // O(1)
-        if (tienePadre && this.comparador.compare(nuestroNodo.v, this.elementos.get((i - 1) / 2).v) > 0) {
-            while (tienePadre) { // O(log(n))-> A lo sumo recorre toda la altura del heap, que es log(n)
-                int padre = (i - 1) / 2;
-                i = siftUp(i, padre);
-                tienePadre = i > 0;
-            }
-        } else {
-            heapifearDown(i); // O(log(n))-> heapifearDown es O(log(n))
-        }
-    }
-
-    public boolean vacia() { // O(1)
-        return this.elementos.size() == 0; // O(1)
-    }
-
     public Handle encolar(T e) { // O(log(n))
 
         Nodo nuevoNodo = new Nodo(e, this.elementos); // O(1)
@@ -134,31 +69,6 @@ public class ColaDePrioridadGenerica<T> {
         }
         assert (esMaxHeap()); // esto se puede comentar, solo lo usamos para testear
         return nuevoNodo.handle;
-    }
-
-    private int siftUp(int i, int padre) { // O(1)
-
-        T valorI = this.elementos.get(i).v; //
-        T valorPadre = this.elementos.get(padre).v; //
-        if (this.comparador.compare(valorI, valorPadre) > 0) { // O(1) ->comparar y swap son O(1)
-            swap(i, padre); //
-            return padre; //
-        }
-
-        return -1;
-    }
-
-    private void swap(int i, int j) { // O(1)
-        Nodo nodoI = elementos.get(i); // O(1)
-        Nodo nodoJ = elementos.get(j); // O(1)
-        elementos.set(i, nodoJ); // O(1)
-        elementos.set(j, nodoI); // O(1)
-        nodoI.handle.pos = j; // O(1)
-        nodoJ.handle.pos = i; // O(1)
-    }
-
-    public T MasPrioritario() { // O(1)
-        return elementos.get(0).v; // O(1)
     }
 
     public T desencolarMax() { // O(log(n))
@@ -183,6 +93,20 @@ public class ColaDePrioridadGenerica<T> {
         return res;
     }
 
+    private void heapifearUno(int i) { // O(log(n))
+        Nodo nuestroNodo = this.elementos.get(i); // O(1)
+        boolean tienePadre = i > 0; // O(1)
+        if (tienePadre && this.comparador.compare(nuestroNodo.v, this.elementos.get((i - 1) / 2).v) > 0) {
+            while (tienePadre) { // O(log(n))-> A lo sumo recorre toda la altura del heap, que es log(n)
+                int padre = (i - 1) / 2;
+                i = siftUp(i, padre);
+                tienePadre = i > 0;
+            }
+        } else {
+            heapifearDown(i); // O(log(n))-> heapifearDown es O(log(n))
+        }
+    }
+
     private void heapifearDown(int i) { // O(log(n))
         boolean tieneDosHijos = (2 * i + 2) < this.elementos.size(); // O(1)
         boolean tieneUnHijo = (2 * i + 1) < this.elementos.size(); // O(1)
@@ -200,6 +124,18 @@ public class ColaDePrioridadGenerica<T> {
             tieneUnHijo = (2 * i + 1) < this.elementos.size(); // O(1)
 
         }
+    }
+
+    private int siftUp(int i, int padre) { // O(1)
+
+        T valorI = this.elementos.get(i).v; //
+        T valorPadre = this.elementos.get(padre).v; //
+        if (this.comparador.compare(valorI, valorPadre) > 0) { // O(1) ->comparar y swap son O(1)
+            swap(i, padre); //
+            return padre; //
+        }
+
+        return -1;
     }
 
     private int siftDownUnHijo(int i, int hijo) { // O(1)-> asignaciones, comparaciones y operaciones, sin ciclos, tiene
@@ -235,7 +171,73 @@ public class ColaDePrioridadGenerica<T> {
         return this.elementos.size(); // O(1)
     }
 
+    private void swap(int i, int j) { // O(1)
+        Nodo nodoI = elementos.get(i); // O(1)
+        Nodo nodoJ = elementos.get(j); // O(1)
+        elementos.set(i, nodoJ); // O(1)
+        elementos.set(j, nodoI); // O(1)
+        nodoI.handle.pos = j; // O(1)
+        nodoJ.handle.pos = i; // O(1)
+    }
+
+    // seteas el elemento en h pero asegurando que no va a cambiar su pos en la cola
+    // de Prioridad
+    public void setRapido(Handle h, T v) { // O(1)
+        this.elementos.get(h.pos).v = v; // O(1)
+    }
+
+    // seteas el elemento en h.
+    public void set(Handle h, T v) { // O(log(n))
+        this.elementos.get(h.pos).v = v; // O(1)
+
+        heapifearUno(h.pos); // O(log(n))
+
+    }
+
+    public T get(Handle h) { // O(1)
+        return this.elementos.get(h.pos).v; // O(1)
+    }
+
+    public ArrayList<Handle> verHandles() { // O(n)
+        ArrayList<Handle> res = new ArrayList<Handle>();
+        for (Nodo n : this.elementos) { // O(n)
+            res.add(n.handle); // O(1)
+        }
+        return res;
+    }
+
+    public T MasPrioritario() { // O(1)
+        return elementos.get(0).v; // O(1)
+    }
+
+    public boolean vacia() { // O(1)
+        return this.elementos.size() == 0; // O(1)
+    }
+
     public String toString() { // O(1)
         return this.elementos.toString(); // O(1)
+    }
+
+    // ----------- Tests -------------
+
+    // Advertencia: Usar esto en las funciones obviamente nos cambia la complejidad,
+    // pero lo tomamos como parte del testing,
+    // y en caso de implementarse este sistema, sería eliminado de acá y delegado al
+    // script de testing
+    private boolean esMaxHeap() {
+        for (int padre = 0; padre < this.elementos.size() / 2; padre++) {
+            int hijoDer = 2 * padre + 2;
+            int hijoIzq = 2 * padre + 1;
+
+            if (hijoDer < this.elementos.size()
+                    && this.comparador.compare(this.elementos.get(padre).v, this.elementos.get(hijoDer).v) < 0) {
+                return false;
+            }
+            if (hijoIzq < this.elementos.size()
+                    && this.comparador.compare(this.elementos.get(padre).v, this.elementos.get(hijoIzq).v) < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }

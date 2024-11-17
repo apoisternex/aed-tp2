@@ -57,7 +57,6 @@ public class DobleColaDePrioridadTests {
         cola.encolar(t4);
 
         assertEquals(cola.desencolarA(), t2);
-        assertEquals("suhoes", cola.toString());
         assertEquals(cola.desencolarB(), t4);
         cola.desencolarA();
         cola.desencolarB();

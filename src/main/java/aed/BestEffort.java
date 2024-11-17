@@ -100,6 +100,7 @@ public class BestEffort {
             Traslado t = this.trasladosHeap.desencolarA();
 
             Ciudad nuevoOrigen = new Ciudad(t.origen);
+            // algo de todos estos get / sets rompe la complejidad???;
             Ciudad viejoOrigen = this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.origen));
             nuevoOrigen.ganancia = viejoOrigen.ganancia + t.gananciaNeta;
             nuevoOrigen.perdida = viejoOrigen.perdida;

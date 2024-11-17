@@ -1,9 +1,14 @@
 aed/DobleColaDePrioridad$Nodo.class
 aed/TrasladoComparatorAntiguedad.class
+aed/TrasladoComparatorRedituable.class
+aed/ColaDePrioridadGenerica$1.class
+aed/DobleColaDePrioridad.class
+aed/ColaDePrioridadGenerica$Handle.class
 aed/DobleColaDePrioridad$1.class
 aed/Ciudad.class
-aed/TrasladoComparatorRedituable.class
-aed/DobleColaDePrioridad.class
 aed/Traslado.class
 aed/BestEffort.class
+aed/ColaDePrioridadGenerica.class
+aed/CiudadComparator.class
+aed/ColaDePrioridadGenerica$Nodo.class
 aed/DobleColaDePrioridad$VectorComparable.class

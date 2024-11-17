@@ -50,24 +50,20 @@ public class BestEffort {
     public int[] despacharMasRedituables(int n) {
         int[] res = new int[n];
         for (int i = 0; i < n; i++) { // checkear complejidad
-            Traslado t = this.trasladosHeap.desencolarB();
+            if (!this.trasladosHeap.estaVacia()) {
+                Traslado t = this.trasladosHeap.desencolarB();
 
-            this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.origen)).sumarPerdida(t.gananciaNeta);
+                this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.origen)).sumarPerdida(t.gananciaNeta);
+                this.ciudadesPorSuperavit.get(this.handlesCiudades.get(t.destino)).sumarGanancia(t.gananciaNeta);
 
-            Ciudad destino = new Ciudad(t.origen);
-            destino.sumarGanancia(t.gananciaNeta);
-            this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.destino), destino);
+                this.cantidadTraslados++;
+            }
         }
         return res;
     }
 
     public int[] despacharMasAntiguos(int n) {
-        // Traslados[] trasladosAntiguos=[]
-        // for(n; n>=0; n--) {
-        // trasladosAntiguos+=trasladosHeap.desencolarB().id
-        // }
-        // return trasladosRedituables;
-        return new int[2];
+        return new int[n];
     }
 
     public int ciudadConMayorSuperavit() {
@@ -83,7 +79,7 @@ public class BestEffort {
     }
 
     public int gananciaPromedioPorTraslado() {
-        return this.gananciaTotal / this.cantTraslados;
+        return this.gananciaTotal / this.cantidadTraslados;
     }
 
 }

@@ -69,6 +69,7 @@ public class BestEffort {
             ciudadesPorSuperavit.set(this.handlesCiudades.get(t.destino), nuevoDestino);
 
             this.cantidadTraslados++;
+            this.gananciaTotal += t.gananciaNeta;
 
             if (nuevoOrigen.ganancia > this.maxGanancia) {
                 this.maxGanancia = nuevoOrigen.ganancia;
@@ -110,6 +111,9 @@ public class BestEffort {
 
             this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.destino), nuevoDestino);
             this.ciudadesPorSuperavit.set(this.handlesCiudades.get(t.origen), nuevoOrigen);
+
+            this.cantidadTraslados++;
+            this.gananciaTotal += t.gananciaNeta;
 
             if (nuevoOrigen.ganancia > this.maxGanancia) {
                 this.maxGanancia = nuevoOrigen.ganancia;

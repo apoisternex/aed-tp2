@@ -54,6 +54,7 @@ public class DobleColaDePrioridad<T> {
         this.vB.elementos.add(new Nodo(e, this.vB.elementos.size())); // O(1)
         heapifearUno(vA, vB); // O(log(n))
         heapifearUno(vB, vA); // O(log(n))
+
         checkInvRep(); // esto se puede comentar, solo lo usamos para testear
     }
 
@@ -155,12 +156,11 @@ public class DobleColaDePrioridad<T> {
     }
 
     private void swap(VectorComparable este, VectorComparable otro, int i, int j) { // O(1)
-        // es este el unico lugar donde cambiamos cosas de lugar?
         Nodo nodoI = este.elementos.get(i); // O(1)
         Nodo nodoJ = este.elementos.get(j); // O(1)
         este.elementos.set(i, nodoJ); // O(1)
         este.elementos.set(j, nodoI); // O(1)
-        if (nodoI.posEnOtra < otro.elementos.size() && nodoJ.posEnOtra < otro.elementos.size()) {
+        if (nodoI.posEnOtra < otro.elementos.size() && nodoJ.posEnOtra < otro.elementos.size()) { // O(1)
             otro.elementos.get(nodoI.posEnOtra).posEnOtra = j; // O(1)
             otro.elementos.get(nodoJ.posEnOtra).posEnOtra = i;// O(1)
         }

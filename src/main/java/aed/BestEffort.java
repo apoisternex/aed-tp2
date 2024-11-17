@@ -30,7 +30,7 @@ public class BestEffort {
         this.cantidadTraslados = 0; // O(1)
 
         this.trasladosHeap = new DobleColaDePrioridad<Traslado>(new TrasladoComparatorAntiguedad(),
-                new TrasladoComparatorRedituable(), traslados); // O(|t|)
+                new TrasladoComparatorRedituable(), traslados); // O(|t|) Algoritmo de Floyd
 
         ArrayList<Ciudad> ciudadesPorAgregar = new ArrayList<Ciudad>(); // O(1)
 
@@ -43,8 +43,8 @@ public class BestEffort {
         this.handlesCiudades = this.ciudadesPorSuperavit.verHandles(); // O(|c|)
     }
 
-    public void registrarTraslados(Traslado[] traslados) { // |t|log(|t|)
-        for (Traslado t : traslados) { // |t| veces
+    public void registrarTraslados(Traslado[] traslados) { // |traslados|log(|t|)
+        for (Traslado t : traslados) { // |traslados| veces
             this.trasladosHeap.encolar(t); // log(|t|)
         }
     }

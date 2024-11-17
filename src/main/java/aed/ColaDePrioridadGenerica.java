@@ -61,8 +61,8 @@ public class ColaDePrioridadGenerica<T> {
         int i = this.elementos.size() - 1; // O(1)
         boolean tienePadre = i > 0; // O(1)
 
-        while (tienePadre) { // O(log(n))-> El while se ejecuta en peor caso Log(h) veces, h = altura del
-                             // heap)
+        while (tienePadre) { // O(log(n))-> El while se ejecuta en peor caso Log(n) veces, que es la altura
+                             // del heap
             int padre = (i - 1) / 2; //
             i = siftUp(i, padre); // O(1)->siftUp es O(1)
             tienePadre = i > 0; // O(1)
@@ -76,7 +76,7 @@ public class ColaDePrioridadGenerica<T> {
 
         swap(0, this.elementos.size() - 1); // O(1)
         this.elementos.remove(this.elementos.size() - 1); // O(1)
-        heapifearDown(0); // O(log(n))-> heapifearDown es O(1)
+        heapifearDown(0); // O(log(n))
 
         assert (esMaxHeap()); // esto se puede comentar, solo lo usamos para testear
         return res;

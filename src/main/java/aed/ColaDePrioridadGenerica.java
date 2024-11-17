@@ -96,11 +96,11 @@ public class ColaDePrioridadGenerica<T> {
     private void heapifearUno(int i) { // O(log(n))
         Nodo nuestroNodo = this.elementos.get(i); // O(1)
         boolean tienePadre = i > 0; // O(1)
-        if (tienePadre && this.comparador.compare(nuestroNodo.v, this.elementos.get((i - 1) / 2).v) > 0) {
+        if (tienePadre && this.comparador.compare(nuestroNodo.v, this.elementos.get((i - 1) / 2).v) > 0) { // O(1)
             while (tienePadre) { // O(log(n))-> A lo sumo recorre toda la altura del heap, que es log(n)
-                int padre = (i - 1) / 2;
-                i = siftUp(i, padre);
-                tienePadre = i > 0;
+                int padre = (i - 1) / 2; // O(1)
+                i = siftUp(i, padre); // O(1)
+                tienePadre = i > 0; // O(1)
             }
         } else {
             heapifearDown(i); // O(log(n))-> heapifearDown es O(log(n))
@@ -111,7 +111,7 @@ public class ColaDePrioridadGenerica<T> {
         boolean tieneDosHijos = (2 * i + 2) < this.elementos.size(); // O(1)
         boolean tieneUnHijo = (2 * i + 1) < this.elementos.size(); // O(1)
 
-        while (tieneDosHijos || tieneUnHijo) { // O(n)
+        while (tieneDosHijos || tieneUnHijo) { // O(log(n)), porque a lo sumo recorre la altura del heap
             if (!tieneDosHijos) { // O(1)
                 int hijo = 2 * i + 1; // O(1)
                 i = siftDownUnHijo(i, hijo); // O(1)
@@ -131,8 +131,8 @@ public class ColaDePrioridadGenerica<T> {
         T valorI = this.elementos.get(i).v; //
         T valorPadre = this.elementos.get(padre).v; //
         if (this.comparador.compare(valorI, valorPadre) > 0) { // O(1) ->comparar y swap son O(1)
-            swap(i, padre); //
-            return padre; //
+            swap(i, padre); // O(1)
+            return padre; // O(1)
         }
 
         return -1;
